@@ -1,11 +1,12 @@
 # Patient Management App
 
-This is a frontend application built with React and Vite for managing patient data. The application allows users to view, add, and edit patient information with a focus on smooth and interactive user experiences, using technologies like React Query, Styled Components, and Framer Motion.
+This is a frontend application built with React and Vite for managing patient data. The application allows users to view, add, and edit patient information, using technologies like React Query, Styled Components, and Framer Motion.
 
 ## Features
 
 - **View Patient Records**: Display a list of patient records in a user-friendly interface.
 - **Add/Edit Patients**: Use a modal to add new patients or edit existing patient information.
+- **Search Patients**: Since the list is long, is useful to find patients quickly.
 - **Smooth Animations**: Leverage Framer Motion for interactive and polished animations.
 - **Form Validation**: Ensure data accuracy and completeness with real-time form validation.
 - **Responsive Design**: Optimized for various screen sizes and devices.
@@ -15,7 +16,7 @@ This is a frontend application built with React and Vite for managing patient da
 - **React**: Core framework for building the user interface.
 - **Vite**: Fast and optimized build tool for modern web projects.
 - **TypeScript**: Adds type safety and enhances code quality.
-- **React Query**: Manages server state and simplifies data fetching and caching.
+- **React Query**: Manages server state and simplifies data fetching and updating.
 - **Styled Components**: CSS-in-JS library for styling React components.
 - **Framer Motion**: Animation library for creating smooth, interactive animations.
 - **ESLint & Prettier**: Ensures consistent code style and formatting.
@@ -81,12 +82,12 @@ src/
 
 ## Design Decisions
 
-Vite was chosen for its fast development experience and optimized build process, making it an excellent fit for this project.
+Vite was chosen for its fast development experience and optimized build process.
 
-React Query is used to manage server state, handle caching, and provide a smooth data fetching experience.
+React Query is used to manage server state and data fetching experience.
 Styled Components provides a flexible, component-based approach to styling, allowing for easy maintenance and theming.
 
-Framer Motion was integrated to create smooth, engaging animations that enhance the user experience.
+Framer Motion was integrated to create animations that enhance the user experience.
 Future Enhancements
 
 License
