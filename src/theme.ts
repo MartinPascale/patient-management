@@ -15,6 +15,9 @@ export const lightTheme: DefaultTheme = {
     default: '#b63224',
     hover: '#a22a1f',
   },
+  info: '#1a8f9c',
+  success: '#24b624',
+  error: '#b62424',
 };
 
 export const darkTheme: DefaultTheme = {
@@ -32,4 +35,7 @@ export const darkTheme: DefaultTheme = {
     default: '#b63224',
     hover: '#a22a1f',
   },
+  info: '#3399FF',
+  success: '#24b624',
+  error: '#b62424',
 };

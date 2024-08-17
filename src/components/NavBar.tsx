@@ -1,6 +1,5 @@
-import React from 'react';
 import styled from 'styled-components';
-import { ToggleButton } from './ToggleButton';
+import { ThemeToggleButton } from './ToggleButton';
 
 const NavbarContainer = styled.nav`
   width: 100vw;
@@ -71,7 +70,7 @@ const Navbar: React.FC<{
         <AddButton onClick={handleAddPatient} aria-label="add patient">
           +
         </AddButton>
-        <ToggleButton onClick={onToggleTheme} />
+        <ThemeToggleButton />
       </ButtonContainer>
     </NavbarContainer>
   );

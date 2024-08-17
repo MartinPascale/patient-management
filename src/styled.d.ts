@@ -17,5 +17,8 @@ declare module 'styled-components' {
       hover: string;
       dark?: string;
     };
+    info: string;
+    success: string;
+    error: string;
   }
 }
