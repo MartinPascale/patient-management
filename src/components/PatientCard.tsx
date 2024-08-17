@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
-import { useDeletePatient } from '../hooks/usePatients';
 
 interface Patient {
   id: string;
@@ -26,6 +25,9 @@ const Card = styled(motion.div)`
   cursor: pointer;
   display: flex;
   align-items: flex-start;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  min-height: 225px;
 
   @media (min-width: 850px) {
     margin-bottom: 16px;
@@ -41,6 +43,7 @@ const Avatar = styled.img`
 
 const Details = styled.div`
   margin-top: 10px;
+  width: 100%;
 `;
 
 const Button = styled.button`
@@ -59,44 +62,53 @@ const Button = styled.button`
   }
 `;
 
+const ShowMoreButton = styled(Button)`
+  width: 100%;
+  justify-self: end;
+`;
+
 const PatientCard: React.FC<PatientCardProps> = ({ patient, onEdit }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const deletePatientMutation = useDeletePatient();
-
-  const onDelete = (patient: Patient) => {
-    deletePatientMutation.mutate(patient.id);
-  };
+  const shortDescription = `${patient.description.slice(0, 100)}...`;
 
   return (
     <Card
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       whileHover={{ scale: 1.02 }}
-      onClick={() => setIsExpanded(!isExpanded)}
     >
-      <Avatar src={patient.avatar} alt={patient.name} />
-      <div>
-        <span>{patient.name}</span>
-        <p>Created At: {new Date(patient.createdAt).toLocaleDateString()}</p>
-        {isExpanded && (
-          <Details>
-            <p>{patient.description}</p>
-            <p>
-              Website:{' '}
-              <a
-                href={patient.website}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {patient.website}
-              </a>
-            </p>
-            <Button onClick={() => onEdit(patient)}>Edit</Button>
-            <Button onClick={() => onDelete(patient)}>Delete</Button>
-          </Details>
-        )}
+      <div style={{ display: 'flex', width: '100%' }}>
+        <Avatar src={patient.avatar} alt={patient.name} />
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            flex: 1,
+          }}
+        >
+          <span>{patient.name}</span>
+          <div>
+            Created At: {new Date(patient.createdAt).toLocaleDateString()}
+          </div>
+        </div>
+        <Button onClick={() => onEdit(patient)}>Edit</Button>
       </div>
+      <p>{isExpanded ? patient.description : shortDescription}</p>
+      {isExpanded && (
+        <Details>
+          <p>
+            Website:{' '}
+            <a href={patient.website} target="_blank" rel="noopener noreferrer">
+              {patient.website}
+            </a>
+          </p>
+        </Details>
+      )}
+      <ShowMoreButton onClick={() => setIsExpanded(!isExpanded)}>
+        Show {isExpanded ? 'Less' : 'More'}
+      </ShowMoreButton>
     </Card>
   );
 };
