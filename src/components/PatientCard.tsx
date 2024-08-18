@@ -1,85 +1,29 @@
-import { motion } from 'framer-motion';
 import { useState } from 'react';
 import styled from 'styled-components';
-
-interface Patient {
-  id: string;
-  createdAt: string;
-  name: string;
-  avatar: string;
-  description: string;
-  website: string;
-}
+import { Patient } from '../types/Patient';
+import Avatar from './ui/Avatar';
+import Button from './ui/Button';
+import Card from './ui/Card';
 
 interface PatientCardProps {
   patient: Patient;
   onEdit: (patient: Patient) => void;
 }
 
-const Card = styled(motion.div)`
-  background-color: ${({ theme }) => theme?.primary.dark};
-  padding: 20px;
-  border-radius: 12px;
-  border: 1px solid ${({ theme }) => theme?.background.accent};
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  display: flex;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  min-height: 225px;
-
-  @media (min-width: 850px) {
-    margin-bottom: 16px;
-  }
-`;
-
-const Avatar = styled.img`
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-right: 16px;
-`;
-
 const Details = styled.div`
   margin-top: 10px;
   width: 100%;
 `;
 
-const Button = styled.button`
-  margin-top: 10px;
-  padding: 8px 16px;
-  background-color: transparent;
-  color: ${({ theme }) => theme?.primary.default};
-  border: 1px solid ${({ theme }) => theme?.primary.default};
-  border-radius: 12px;
-  cursor: pointer;
-  margin-right: 8px;
-
-  &:hover {
-    background-color: ${({ theme }) => theme?.primary.default};
-    color: ${({ theme }) => theme?.primary.dark};
-  }
-`;
-
-const ShowMoreButton = styled(Button)`
-  width: 100%;
-  justify-self: end;
-`;
-
 const PatientCard: React.FC<PatientCardProps> = ({ patient, onEdit }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const shortDescription = `${patient.description.slice(0, 100)}...`;
+  const shortDescription = `${patient.description.slice(0, 200)} ${patient.description.length > 200 ? '...' : ''}`;
 
   return (
-    <Card
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      whileHover={{ scale: 1.02 }}
-    >
+    <Card>
       <div style={{ display: 'flex', width: '100%' }}>
-        <Avatar src={patient.avatar} alt={patient.name} />
+        <Avatar src={patient.avatar} name={patient.name} />
         <div
           style={{
             display: 'flex',
@@ -93,7 +37,9 @@ const PatientCard: React.FC<PatientCardProps> = ({ patient, onEdit }) => {
             Created At: {new Date(patient.createdAt).toLocaleDateString()}
           </div>
         </div>
-        <Button onClick={() => onEdit(patient)}>Edit</Button>
+        <Button variant="outlined" onClick={() => onEdit(patient)}>
+          Edit
+        </Button>
       </div>
       <p>{isExpanded ? patient.description : shortDescription}</p>
       {isExpanded && (
@@ -106,9 +52,17 @@ const PatientCard: React.FC<PatientCardProps> = ({ patient, onEdit }) => {
           </p>
         </Details>
       )}
-      <ShowMoreButton onClick={() => setIsExpanded(!isExpanded)}>
+      <Button
+        onClick={() => setIsExpanded(!isExpanded)}
+        variant="text"
+        style={{
+          position: 'absolute',
+          bottom: '16px',
+          right: '16px',
+        }}
+      >
         Show {isExpanded ? 'Less' : 'More'}
-      </ShowMoreButton>
+      </Button>
     </Card>
   );
 };

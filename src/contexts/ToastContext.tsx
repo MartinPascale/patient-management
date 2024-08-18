@@ -1,13 +1,14 @@
+import { AnimatePresence } from 'framer-motion';
 import {
   createContext,
+  ReactNode,
+  useCallback,
   useContext,
   useState,
-  useCallback,
-  ReactNode,
 } from 'react';
 import styled from 'styled-components';
-import { motion, AnimatePresence } from 'framer-motion';
 import { v4 as uuidv4 } from 'uuid';
+import ToastNotification from '../components/ui/ToastNotification';
 
 interface Toast {
   id: string;
@@ -32,29 +33,6 @@ const ToastContainer = styled.div`
   gap: 10px;
 `;
 
-const ToastMessage = styled(motion.div)`
-  color: ${({ theme }) => theme.color};
-  padding: 16px 24px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 12px;
-  background-color: ${({ theme }) => theme.background.main};
-  border: 2px solid ${({ theme }) => theme.primary?.dark};
-  z-index: 1001;
-
-  &.success {
-    border-color: ${({ theme }) => theme.success};
-  }
-
-  &.error {
-    border-color: ${({ theme }) => theme.error};
-  }
-
-  &.info {
-    border-color: ${({ theme }) => theme.info};
-  }
-`;
-
 const ToastProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
@@ -77,15 +55,9 @@ const ToastProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       <ToastContainer>
         <AnimatePresence>
           {toasts.map((toast) => (
-            <ToastMessage
-              key={toast.id}
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className={toast.type || 'info'}
-            >
+            <ToastNotification key={toast.id} className={toast.type || 'info'}>
               {toast.message}
-            </ToastMessage>
+            </ToastNotification>
           ))}
         </AnimatePresence>
       </ToastContainer>

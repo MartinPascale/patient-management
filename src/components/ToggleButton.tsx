@@ -7,11 +7,6 @@ const StyledButton = styled.button`
   cursor: pointer;
   padding: 8px;
   border-radius: 50%;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: ${({ theme }) => theme.background.main};
-  }
 `;
 
 export const ThemeToggleButton = () => {

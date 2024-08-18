@@ -1,36 +1,35 @@
-import { useState } from 'react';
+import { useFormik } from 'formik';
 import styled from 'styled-components';
+import { validationSchema } from '../utils/PatientSchema';
+import Button from './ui/Button';
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 `;
 
-const Input = styled.input`
+const Input = styled.input<{ hasError?: boolean }>`
+  width: 100%;
   margin-bottom: 10px;
   padding: 8px;
   border-radius: 12px;
-  border: 1px solid #ccc;
+  border: 1px solid ${({ theme }) => theme.primary.dark};
 `;
 
-const TextArea = styled.textarea`
+const TextArea = styled.textarea<{ hasError?: boolean }>`
+  width: 100%;
+  min-height: 200px;
   margin-bottom: 10px;
   padding: 8px;
   border-radius: 12px;
-  border: 1px solid #ccc;
+  border: 1px solid ${({ theme }) => theme.primary.dark};
 `;
 
-const Button = styled.button`
-  padding: 8px 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #0056b3;
-  }
+const ErrorMessage = styled.div`
+  color: red;
+  margin-bottom: 10px;
 `;
 
 interface Patient {
@@ -48,57 +47,79 @@ interface PatientFormProps {
 }
 
 const PatientForm: React.FC<PatientFormProps> = ({ initialData, onSubmit }) => {
-  const [name, setName] = useState(initialData?.name || '');
-  const [avatar, setAvatar] = useState(initialData?.avatar || '');
-  const [description, setDescription] = useState(
-    initialData?.description || '',
-  );
-  const [website, setWebsite] = useState(initialData?.website || '');
-  const [createdAt] = useState(
-    initialData?.createdAt || new Date().toISOString(),
-  );
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSubmit({
-      id: initialData?.id || Date.now().toString(),
-      name,
-      avatar,
-      description,
-      website,
-      createdAt,
-    });
-  };
+  const formik = useFormik({
+    initialValues: {
+      name: initialData?.name || '',
+      avatar: initialData?.avatar || '',
+      description: initialData?.description || '',
+      website: initialData?.website || '',
+      createdAt: initialData?.createdAt || new Date().toISOString(),
+    },
+    validationSchema,
+    onSubmit: (values) => {
+      onSubmit({
+        ...values,
+        id: initialData?.id || Date.now().toString(),
+      });
+    },
+  });
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Input
-        type="text"
-        placeholder="Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        required
-      />
-      <Input
-        type="text"
-        placeholder="Avatar URL"
-        value={avatar}
-        onChange={(e) => setAvatar(e.target.value)}
-        required
-      />
-      <TextArea
-        placeholder="Description"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        required
-      />
-      <Input
-        type="text"
-        placeholder="Website"
-        value={website}
-        onChange={(e) => setWebsite(e.target.value)}
-        required
-      />
+    <Form onSubmit={formik.handleSubmit}>
+      <div>{initialData ? 'Edit Patient' : 'Create Patient'}</div>
+      <div>
+        <div>
+          <Input
+            type="text"
+            name="name"
+            placeholder="Name"
+            value={formik.values.name}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          {formik.touched.name && formik.errors.name && (
+            <ErrorMessage>{formik.errors.name}</ErrorMessage>
+          )}
+        </div>
+        <div>
+          <Input
+            type="text"
+            name="avatar"
+            placeholder="Avatar URL"
+            value={formik.values.avatar}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          {formik.touched.avatar && formik.errors.avatar && (
+            <ErrorMessage>{formik.errors.avatar}</ErrorMessage>
+          )}
+        </div>
+        <div>
+          <TextArea
+            name="description"
+            placeholder="Description"
+            value={formik.values.description}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          {formik.touched.description && formik.errors.description && (
+            <ErrorMessage>{formik.errors.description}</ErrorMessage>
+          )}
+        </div>
+        <div>
+          <Input
+            type="text"
+            name="website"
+            placeholder="Website"
+            value={formik.values.website}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          {formik.touched.website && formik.errors.website && (
+            <ErrorMessage>{formik.errors.website}</ErrorMessage>
+          )}
+        </div>
+      </div>
       <Button type="submit">Submit</Button>
     </Form>
   );

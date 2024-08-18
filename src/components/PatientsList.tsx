@@ -1,8 +1,9 @@
-import React from 'react';
 import styled from 'styled-components';
+import { useToast } from '../contexts/ToastContext';
 import { usePatients } from '../hooks/usePatients';
-import PatientCard from './PatientCard';
 import { Patient } from '../types/Patient';
+import PatientCard from './PatientCard';
+import SkeletonLoader from './ui/Skeleton';
 
 const Container = styled.div`
   margin: 80px auto;
@@ -33,16 +34,21 @@ const PatientList: React.FC<PatientListProps> = ({
   searchQuery,
   onEditPatient,
 }) => {
-  const { data: patients, isLoading, error } = usePatients();
+  const { data: patients, error, isLoading } = usePatients();
+  const { addToast } = useToast();
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error loading patients.</p>;
+  if (error) {
+    addToast('Error loading patients', 'error');
+    return <p>Error loading patients.</p>;
+  }
 
   const filteredPatients = patients?.filter((patient) =>
     patient.name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
-  return (
+  return isLoading ? (
+    <SkeletonLoader />
+  ) : (
     <Container>
       {filteredPatients?.map((patient) => (
         <CardWrapper key={patient.id}>
