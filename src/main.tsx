@@ -1,10 +1,9 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import App from './App';
-import ToastProvider from './contexts/ToastContext';
 import ThemeProvider from './contexts/ThemeContext';
+import ToastProvider from './contexts/ToastContext';
 
 const queryClient = new QueryClient();
 
@@ -17,7 +16,6 @@ root.render(
       <ThemeProvider>
         <ToastProvider>
           <App />
-          <ReactQueryDevtools initialIsOpen={false} />
         </ToastProvider>
       </ThemeProvider>
     </QueryClientProvider>
