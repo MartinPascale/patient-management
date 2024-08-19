@@ -64,6 +64,8 @@ const PatientForm: React.FC<PatientFormProps> = ({ initialData, onSubmit }) => {
     },
   });
 
+  const isDisabled = !formik.isValid || !formik.dirty;
+
   return (
     <Form onSubmit={formik.handleSubmit}>
       <div>{initialData ? 'Edit Patient' : 'Create Patient'}</div>
@@ -120,7 +122,9 @@ const PatientForm: React.FC<PatientFormProps> = ({ initialData, onSubmit }) => {
           )}
         </div>
       </div>
-      <Button type="submit">Submit</Button>
+      <Button type="submit" disabled={isDisabled}>
+        Submit
+      </Button>
     </Form>
   );
 };

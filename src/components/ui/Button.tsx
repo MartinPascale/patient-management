@@ -16,6 +16,12 @@ const BaseButton = styled(motion.button)<MotionButtonProps>`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  &:disabled {
+    cursor: not-allowed !important;
+    opacity: 0.5 !important;
+    pointer-events: none !important;
+  }
 `;
 
 const containedButtonVariants = {
