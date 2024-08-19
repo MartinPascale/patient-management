@@ -1,14 +1,14 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
-import { Patient } from '../types/Patient';
 import { useToast } from '../contexts/ToastContext';
+import { Patient } from '../types/Patient';
 
 const API_URL = 'https://63bedcf7f5cfc0949b634fc8.mockapi.io/users';
 
 const fetchPatients = async (): Promise<Patient[]> => {
   try {
     const { data } = await axios.get<Patient[]>(API_URL);
-    return data;
+    return data.sort((a, b) => a.createdAt.localeCompare(b.createdAt));
   } catch (error) {
     throw new Error('Error fetching patients');
   }
@@ -18,6 +18,7 @@ export const usePatients = () => {
   return useQuery<Patient[], Error>({
     queryKey: ['patients'],
     queryFn: fetchPatients,
+    refetchOnWindowFocus: false, // It is disabled to avoid loosing the data that is not persisted.
   });
 };
 
@@ -32,7 +33,7 @@ export const useAddPatient = () => {
     onSuccess: (newPatient) => {
       queryClient.setQueryData(['patients'], (old: Patient[] | undefined) => {
         if (!old) return [];
-        return [...old, newPatient];
+        return [newPatient, ...old];
       });
     },
     onError: (error) => {

@@ -2,6 +2,7 @@ import { PropsWithChildren, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import Button from './Button';
 
 const Overlay = styled(motion.div)`
   position: fixed;
@@ -13,17 +14,25 @@ const Overlay = styled(motion.div)`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 102;
 `;
 
 const ModalContent = styled(motion.div)`
   background: white;
-  padding: 20px;
+  padding: 24px;
   border-radius: 8px;
-  width: 400px;
+  width: 100%;
+  height: 65%;
+  margin: 0 16px;
   position: relative;
+
+  @media (min-width: 850px) {
+    width: 400px;
+    height: 550px;
+  }
 `;
 
-const CloseButton = styled.button`
+const CloseButton = styled(Button).attrs({ variant: 'text' })`
   position: absolute;
   top: 10px;
   right: 10px;

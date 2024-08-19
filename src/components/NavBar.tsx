@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { ThemeToggleButton } from './ToggleButton';
+import Button from './ui/Button';
 
 const NavbarContainer = styled.nav`
   width: 100vw;
@@ -14,6 +15,7 @@ const NavbarContainer = styled.nav`
   color: ${({ theme }) => theme.color};
   border-bottom: 1px solid ${({ theme }) => theme.background.accent};
   padding: 8px 16px;
+  z-index: 10;
 
   @media (min-width: 768px) {
     padding: 8px 32px;
@@ -34,18 +36,6 @@ const SearchInput = styled.input`
   }
 `;
 
-const AddButton = styled.button`
-  width: 40px;
-  height: 40px;
-  border: 1px solid;
-  border-radius: 12px;
-  border-color: ${({ theme }) => theme.primary.hover};
-  color: ${({ theme }) => theme.primary.hover};
-  background-color: transparent;
-  cursor: pointer;
-  font-size: 1.3rem;
-`;
-
 const ButtonContainer = styled.div`
   display: flex;
   gap: 8px;
@@ -58,7 +48,7 @@ const Navbar: React.FC<{
   onSearch: (query: string) => void;
   onToggleTheme: () => void;
   handleAddPatient: () => void;
-}> = ({ onSearch, onToggleTheme, handleAddPatient }) => {
+}> = ({ onSearch, handleAddPatient }) => {
   return (
     <NavbarContainer>
       <SearchInput
@@ -67,9 +57,15 @@ const Navbar: React.FC<{
         onChange={(e) => onSearch(e.target.value)}
       />
       <ButtonContainer>
-        <AddButton onClick={handleAddPatient} aria-label="add patient">
-          +
-        </AddButton>
+        <Button
+          onClick={handleAddPatient}
+          aria-label="add patient"
+          style={{
+            height: '40px',
+          }}
+        >
+          Add Patient
+        </Button>
         <ThemeToggleButton />
       </ButtonContainer>
     </NavbarContainer>

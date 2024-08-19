@@ -1,36 +1,14 @@
-import React, { useState } from 'react';
+import { useFormik } from 'formik';
 import styled from 'styled-components';
+import { validationSchema } from '../utils/PatientSchema';
+import Button from './ui/Button';
+import FormField from './ui/FormField';
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-`;
-
-const Input = styled.input`
-  margin-bottom: 10px;
-  padding: 8px;
-  border-radius: 12px;
-  border: 1px solid #ccc;
-`;
-
-const TextArea = styled.textarea`
-  margin-bottom: 10px;
-  padding: 8px;
-  border-radius: 12px;
-  border: 1px solid #ccc;
-`;
-
-const Button = styled.button`
-  padding: 8px 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #0056b3;
-  }
+  justify-content: space-between;
+  height: 100%;
 `;
 
 interface Patient {
@@ -48,58 +26,70 @@ interface PatientFormProps {
 }
 
 const PatientForm: React.FC<PatientFormProps> = ({ initialData, onSubmit }) => {
-  const [name, setName] = useState(initialData?.name || '');
-  const [avatar, setAvatar] = useState(initialData?.avatar || '');
-  const [description, setDescription] = useState(
-    initialData?.description || '',
-  );
-  const [website, setWebsite] = useState(initialData?.website || '');
-  const [createdAt] = useState(
-    initialData?.createdAt || new Date().toISOString(),
-  );
+  const formik = useFormik({
+    initialValues: {
+      name: initialData?.name || '',
+      avatar: initialData?.avatar || '',
+      description: initialData?.description || '',
+      website: initialData?.website || '',
+      createdAt: initialData?.createdAt || new Date().toISOString(),
+    },
+    validationSchema,
+    onSubmit: (values) => {
+      onSubmit({
+        ...values,
+        id: initialData?.id || Date.now().toString(),
+      });
+    },
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSubmit({
-      id: initialData?.id || Date.now().toString(),
-      name,
-      avatar,
-      description,
-      website,
-      createdAt,
-    });
-  };
+  const isDisabled = !formik.isValid || !formik.dirty;
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Input
-        type="text"
-        placeholder="Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        required
-      />
-      <Input
-        type="text"
-        placeholder="Avatar URL"
-        value={avatar}
-        onChange={(e) => setAvatar(e.target.value)}
-        required
-      />
-      <TextArea
-        placeholder="Description"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        required
-      />
-      <Input
-        type="text"
-        placeholder="Website"
-        value={website}
-        onChange={(e) => setWebsite(e.target.value)}
-        required
-      />
-      <Button type="submit">Submit</Button>
+    <Form onSubmit={formik.handleSubmit}>
+      <div>{initialData ? 'Edit Patient' : 'Create Patient'}</div>
+      <div>
+        <FormField
+          name="name"
+          placeholder="Name"
+          value={formik.values.name}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.errors.name}
+          touched={formik.touched.name}
+        />
+        <FormField
+          name="avatar"
+          placeholder="Avatar URL"
+          value={formik.values.avatar}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.errors.avatar}
+          touched={formik.touched.avatar}
+        />
+        <FormField
+          name="description"
+          placeholder="Description"
+          value={formik.values.description}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.errors.description}
+          touched={formik.touched.description}
+          as="textarea"
+        />
+        <FormField
+          name="website"
+          placeholder="Website"
+          value={formik.values.website}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.errors.website}
+          touched={formik.touched.website}
+        />
+      </div>
+      <Button type="submit" disabled={isDisabled}>
+        Submit
+      </Button>
     </Form>
   );
 };

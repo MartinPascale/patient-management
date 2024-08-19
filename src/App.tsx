@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import Modal from './components/Modal';
+import Modal from './components/ui/Modal';
 import Navbar from './components/NavBar';
 import PatientForm from './components/PatientForm';
 import PatientList from './components/PatientsList';
