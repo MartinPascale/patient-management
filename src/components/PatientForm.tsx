@@ -52,6 +52,7 @@ const PatientForm: React.FC<PatientFormProps> = ({ initialData, onSubmit }) => {
         <FormField
           name="name"
           placeholder="Name"
+          label="Name"
           value={formik.values.name}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
@@ -61,6 +62,7 @@ const PatientForm: React.FC<PatientFormProps> = ({ initialData, onSubmit }) => {
         <FormField
           name="avatar"
           placeholder="Avatar URL"
+          label="Avatar"
           value={formik.values.avatar}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
@@ -70,6 +72,7 @@ const PatientForm: React.FC<PatientFormProps> = ({ initialData, onSubmit }) => {
         <FormField
           name="description"
           placeholder="Description"
+          label="Description"
           value={formik.values.description}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
@@ -80,6 +83,7 @@ const PatientForm: React.FC<PatientFormProps> = ({ initialData, onSubmit }) => {
         <FormField
           name="website"
           placeholder="Website"
+          label="Website"
           value={formik.values.website}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}

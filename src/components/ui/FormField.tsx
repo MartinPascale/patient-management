@@ -12,12 +12,17 @@ const Input = styled.input<{ hasError?: boolean }>`
 
 const TextArea = styled.textarea<{ hasError?: boolean }>`
   width: 100%;
-  min-height: 200px;
+  min-height: 150px;
   margin-bottom: 14px;
   padding: 8px;
   border-radius: 12px;
   border: 1px solid
     ${({ theme, hasError }) => (hasError ? 'red' : theme.primary.dark)};
+`;
+
+const Label = styled.label`
+  margin-bottom: 5px;
+  color: ${({ theme }) => theme.color};
 `;
 
 const ErrorMessage = styled.div`
@@ -31,6 +36,7 @@ interface FormFieldProps {
   name: string;
   type?: string;
   placeholder?: string;
+  label: string;
   value: string;
   onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   onBlur: React.FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>;
@@ -43,6 +49,7 @@ const FormField: React.FC<FormFieldProps> = ({
   name,
   type = 'text',
   placeholder,
+  label,
   value,
   onChange,
   onBlur,
@@ -54,6 +61,7 @@ const FormField: React.FC<FormFieldProps> = ({
 
   return (
     <div>
+      <Label htmlFor={name}>{label}:</Label>
       {as === 'input' ? (
         <Input
           type={type}

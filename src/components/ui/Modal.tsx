@@ -18,7 +18,7 @@ const Overlay = styled(motion.div)`
 `;
 
 const ModalContent = styled(motion.div)`
-  background: white;
+  background-color: ${({ theme }) => theme.primary.dark};
   padding: 24px;
   border-radius: 8px;
   width: 100%;
