@@ -2,34 +2,13 @@ import { useFormik } from 'formik';
 import styled from 'styled-components';
 import { validationSchema } from '../utils/PatientSchema';
 import Button from './ui/Button';
+import FormField from './ui/FormField';
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-`;
-
-const Input = styled.input<{ hasError?: boolean }>`
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 8px;
-  border-radius: 12px;
-  border: 1px solid ${({ theme }) => theme.primary.dark};
-`;
-
-const TextArea = styled.textarea<{ hasError?: boolean }>`
-  width: 100%;
-  min-height: 200px;
-  margin-bottom: 10px;
-  padding: 8px;
-  border-radius: 12px;
-  border: 1px solid ${({ theme }) => theme.primary.dark};
-`;
-
-const ErrorMessage = styled.div`
-  color: red;
-  margin-bottom: 10px;
 `;
 
 interface Patient {
@@ -70,57 +49,43 @@ const PatientForm: React.FC<PatientFormProps> = ({ initialData, onSubmit }) => {
     <Form onSubmit={formik.handleSubmit}>
       <div>{initialData ? 'Edit Patient' : 'Create Patient'}</div>
       <div>
-        <div>
-          <Input
-            type="text"
-            name="name"
-            placeholder="Name"
-            value={formik.values.name}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-          />
-          {formik.touched.name && formik.errors.name && (
-            <ErrorMessage>{formik.errors.name}</ErrorMessage>
-          )}
-        </div>
-        <div>
-          <Input
-            type="text"
-            name="avatar"
-            placeholder="Avatar URL"
-            value={formik.values.avatar}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-          />
-          {formik.touched.avatar && formik.errors.avatar && (
-            <ErrorMessage>{formik.errors.avatar}</ErrorMessage>
-          )}
-        </div>
-        <div>
-          <TextArea
-            name="description"
-            placeholder="Description"
-            value={formik.values.description}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-          />
-          {formik.touched.description && formik.errors.description && (
-            <ErrorMessage>{formik.errors.description}</ErrorMessage>
-          )}
-        </div>
-        <div>
-          <Input
-            type="text"
-            name="website"
-            placeholder="Website"
-            value={formik.values.website}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-          />
-          {formik.touched.website && formik.errors.website && (
-            <ErrorMessage>{formik.errors.website}</ErrorMessage>
-          )}
-        </div>
+        <FormField
+          name="name"
+          placeholder="Name"
+          value={formik.values.name}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.errors.name}
+          touched={formik.touched.name}
+        />
+        <FormField
+          name="avatar"
+          placeholder="Avatar URL"
+          value={formik.values.avatar}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.errors.avatar}
+          touched={formik.touched.avatar}
+        />
+        <FormField
+          name="description"
+          placeholder="Description"
+          value={formik.values.description}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.errors.description}
+          touched={formik.touched.description}
+          as="textarea"
+        />
+        <FormField
+          name="website"
+          placeholder="Website"
+          value={formik.values.website}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.errors.website}
+          touched={formik.touched.website}
+        />
       </div>
       <Button type="submit" disabled={isDisabled}>
         Submit
