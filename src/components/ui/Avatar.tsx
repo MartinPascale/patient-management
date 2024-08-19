@@ -4,6 +4,7 @@ import styled from 'styled-components';
 type AvatarProps = {
   src: string;
   name: string;
+  id: string;
 };
 
 const AvatarContainer = styled.div`
@@ -33,7 +34,7 @@ const AvatarImg = styled.img`
  * @example
  * <Avatar src="https://example.com/image.jpg" name="John Doe" />
  */
-const Avatar = ({ src, name }: AvatarProps) => {
+const Avatar = ({ src, name, id }: AvatarProps) => {
   const [displayImage, setDisplayImage] = useState(true);
 
   const getInitials = (name: string) => {
@@ -48,7 +49,7 @@ const Avatar = ({ src, name }: AvatarProps) => {
   };
 
   return (
-    <AvatarContainer>
+    <AvatarContainer id={id}>
       {displayImage ? (
         <AvatarImg src={src} alt={name} onError={handleImageError} />
       ) : (

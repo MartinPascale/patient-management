@@ -82,7 +82,7 @@ const FormField: React.FC<FormFieldProps> = ({
           hasError={hasError}
         />
       )}
-      {hasError && <ErrorMessage>{error}</ErrorMessage>}
+      {hasError && <ErrorMessage id="error-message">{error}</ErrorMessage>}
     </div>
   );
 };

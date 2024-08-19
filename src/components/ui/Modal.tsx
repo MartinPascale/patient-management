@@ -84,6 +84,7 @@ const Modal: React.FC<PropsWithChildren<ModalProps>> = ({
         initial={{ scale: 0.8 }}
         animate={{ scale: 1 }}
         exit={{ scale: 0.8 }}
+        id="modal"
       >
         <CloseButton onClick={onClose} aria-label="Close modal">
           &times;

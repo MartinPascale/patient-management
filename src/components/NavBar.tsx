@@ -63,6 +63,7 @@ const Navbar: React.FC<{
           style={{
             height: '40px',
           }}
+          id="add-patient-button"
         >
           Add Patient
         </Button>

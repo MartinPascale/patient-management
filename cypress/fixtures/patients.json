@@ -1,0 +1,18 @@
+[
+  {
+    "id": "1",
+    "name": "John Doe",
+    "avatar": "https://example.com/avatar1.jpg",
+    "description": "Description of John Doe.",
+    "website": "https://johndoe.com",
+    "createdAt": "2023-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "2",
+    "name": "Jane Smith",
+    "avatar": "https://example.com/avatar2.jpg",
+    "description": "Description of Jane Smith.",
+    "website": "https://janesmith.com",
+    "createdAt": "2023-01-02T00:00:00.000Z"
+  }
+]

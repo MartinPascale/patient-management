@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useToast } from '../contexts/ToastContext';
 import { Patient } from '../types/Patient';
-import { fetchPatients } from '../services/ApiLib';
+import { fetchPatients } from '../services/API';
 
 export const usePatients = () => {
   return useQuery<Patient[], Error>({

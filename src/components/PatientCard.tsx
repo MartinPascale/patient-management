@@ -21,9 +21,9 @@ const PatientCard: React.FC<PatientCardProps> = ({ patient, onEdit }) => {
   const shortDescription = `${patient.description.slice(0, 200)} ${patient.description.length > 200 ? '...' : ''}`;
 
   return (
-    <Card>
+    <Card id="patient-card">
       <div style={{ display: 'flex', width: '100%' }}>
-        <Avatar src={patient.avatar} name={patient.name} />
+        <Avatar src={patient.avatar} name={patient.name} id="patient-avatar" />
         <div
           style={{
             display: 'flex',
@@ -32,18 +32,22 @@ const PatientCard: React.FC<PatientCardProps> = ({ patient, onEdit }) => {
             flex: 1,
           }}
         >
-          <span>{patient.name}</span>
+          <span id="patient-name">{patient.name}</span>
           <div>
             Created At: {new Date(patient.createdAt).toLocaleDateString()}
           </div>
         </div>
-        <Button variant="outlined" onClick={() => onEdit(patient)}>
+        <Button
+          variant="outlined"
+          onClick={() => onEdit(patient)}
+          id="edit-button"
+        >
           Edit
         </Button>
       </div>
       <p>{isExpanded ? patient.description : shortDescription}</p>
       {isExpanded && (
-        <Details>
+        <Details id="patient-details">
           <p>
             Website:{' '}
             <a href={patient.website} target="_blank" rel="noopener noreferrer">
@@ -60,6 +64,7 @@ const PatientCard: React.FC<PatientCardProps> = ({ patient, onEdit }) => {
           bottom: '16px',
           right: '16px',
         }}
+        id="expand-button"
       >
         Show {isExpanded ? 'Less' : 'More'}
       </Button>

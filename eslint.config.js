@@ -6,9 +6,10 @@ export default new ESLint({
       'eslint:recommended',
       'plugin:react/recommended',
       'plugin:@typescript-eslint/recommended',
+      'plugin:cypress/recommended',
       'prettier',
     ],
-    plugins: ['prettier'],
+    plugins: ['cypress', 'prettier'],
     rules: {
       'prettier/prettier': 'error',
     },
@@ -23,6 +24,9 @@ export default new ESLint({
       react: {
         version: 'detect',
       },
+    },
+    env: {
+      'cypress/globals': true,
     },
   },
 });
