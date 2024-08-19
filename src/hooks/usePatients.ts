@@ -1,12 +1,17 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { Patient } from '../types/Patient';
+import { useToast } from '../contexts/ToastContext';
 
 const API_URL = 'https://63bedcf7f5cfc0949b634fc8.mockapi.io/users';
 
 const fetchPatients = async (): Promise<Patient[]> => {
-  const { data } = await axios.get<Patient[]>(API_URL);
-  return data;
+  try {
+    const { data } = await axios.get<Patient[]>(API_URL);
+    return data;
+  } catch (error) {
+    throw new Error('Error fetching patients');
+  }
 };
 
 export const usePatients = () => {
@@ -18,6 +23,7 @@ export const usePatients = () => {
 
 export const useAddPatient = () => {
   const queryClient = useQueryClient();
+  const { addToast } = useToast();
 
   return useMutation<Patient, Error, Patient>({
     mutationFn: async (newPatient: Patient): Promise<Patient> => {
@@ -29,11 +35,15 @@ export const useAddPatient = () => {
         return [...old, newPatient];
       });
     },
+    onError: (error) => {
+      addToast(error.message, 'error');
+    },
   });
 };
 
 export const useEditPatient = () => {
   const queryClient = useQueryClient();
+  const { addToast } = useToast();
 
   return useMutation<Patient, Error, Patient>({
     mutationFn: async (updatedPatient: Patient): Promise<Patient> => {
@@ -47,21 +57,8 @@ export const useEditPatient = () => {
         );
       });
     },
-  });
-};
-
-export const useDeletePatient = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation<string, Error, string>({
-    mutationFn: async (id: string) => {
-      return id;
-    },
-    onSuccess: (id) => {
-      queryClient.setQueryData(['patients'], (old: Patient[] | undefined) => {
-        if (!old) return [];
-        return old.filter((patient) => patient.id !== id);
-      });
+    onError: (error) => {
+      addToast(error.message, 'error');
     },
   });
 };

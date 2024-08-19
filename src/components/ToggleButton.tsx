@@ -1,4 +1,5 @@
 import styled, { useTheme } from 'styled-components';
+import { useThemeContext } from '../contexts/ThemeContext';
 
 const StyledButton = styled.button`
   background-color: transparent;
@@ -13,13 +14,12 @@ const StyledButton = styled.button`
   }
 `;
 
-export const ToggleButton = ({ onClick }: { onClick: () => void }) => {
+export const ThemeToggleButton = () => {
   const theme = useTheme();
-
-  console.log(theme.primary.dark);
+  const { toggleTheme } = useThemeContext();
 
   return (
-    <StyledButton onClick={onClick}>
+    <StyledButton onClick={toggleTheme}>
       <svg
         width="30px"
         height="30px"

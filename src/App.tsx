@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
-import { ThemeProvider } from 'styled-components';
-import GlobalStyle from './GlobalStyle';
-import { lightTheme, darkTheme } from './theme';
-import PatientList from './components/PatientsList';
-import Modal from './components/Modal';
-import PatientForm from './components/PatientForm';
-import { Patient } from './types/Patient';
-import { useAddPatient, useEditPatient } from './hooks/usePatients';
-import Navbar from './components/NavBar';
+import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import Modal from './components/Modal';
+import Navbar from './components/NavBar';
+import PatientForm from './components/PatientForm';
+import PatientList from './components/PatientsList';
+import { useToast } from './contexts/ToastContext';
+import GlobalStyle from './GlobalStyle';
+import { useAddPatient, useEditPatient } from './hooks/usePatients';
+import { Patient } from './types/Patient';
 
 const App: React.FC = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -18,6 +17,7 @@ const App: React.FC = () => {
 
   const addPatientMutation = useAddPatient();
   const editPatientMutation = useEditPatient();
+  const { addToast } = useToast();
 
   const handleEditPatient = (patient: Patient) => {
     setEditingPatient(patient);
@@ -43,6 +43,7 @@ const App: React.FC = () => {
       });
     }
     setIsModalOpen(false);
+    addToast('Patient saved successfully', 'success');
   };
 
   const toggleTheme = () => {
@@ -54,7 +55,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+    <>
       <GlobalStyle />
       <Navbar
         onSearch={handleSearch}
@@ -70,7 +71,7 @@ const App: React.FC = () => {
           <PatientForm initialData={editingPatient} onSubmit={handleSubmit} />
         </Modal>
       </>
-    </ThemeProvider>
+    </>
   );
 };
 
