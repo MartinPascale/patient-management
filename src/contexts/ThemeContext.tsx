@@ -3,7 +3,7 @@ import {
   ThemeProvider as StyledThemeProvider,
   DefaultTheme,
 } from 'styled-components';
-import { lightTheme, darkTheme } from '../theme';
+import { lightTheme, darkTheme } from '../styles/theme';
 
 interface ThemeContextType {
   toggleTheme: () => void;

@@ -5,7 +5,7 @@ import Navbar from './components/NavBar';
 import PatientForm from './components/PatientForm';
 import PatientList from './components/PatientsList';
 import { useToast } from './contexts/ToastContext';
-import GlobalStyle from './GlobalStyle';
+import GlobalStyle from './styles/GlobalStyle';
 import { useAddPatient, useEditPatient } from './hooks/usePatients';
 import { Patient } from './types/Patient';
 

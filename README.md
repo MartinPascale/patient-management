@@ -20,6 +20,7 @@ This is a frontend application built with React and Vite for managing patient da
 - **Styled Components**: CSS-in-JS library for styling React components.
 - **Framer Motion**: Animation library for creating smooth, interactive animations.
 - **ESLint & Prettier**: Ensures consistent code style and formatting.
+- **Cypress**: For end to end testing of the main features.
 
 ## Getting Started
 
@@ -55,6 +56,12 @@ This will start the Vite development server. The app will be accessible at http:
   npm run lint
 ```
 
+#### Testing with cypress
+
+```bash
+  npm cypress open
+```
+
 ### Building for Production
 
 To create a production build of the application:
@@ -68,16 +75,23 @@ The optimized output will be in the dist directory.
 ## Project Structure
 
 ```bash
+cypress/
+│
+├── e2e/ # End to end Cypress tests
+├── fixtures/ # A mocked api result to use for testing
+├── support/ # A mocked api result to use for testing
 src/
 │
 ├── assets/ # Static assets (images, icons, etc.)
 ├── components/ # Reusable React components
+├── contexts/ # Theme and Toast contexts for unfrequent global state changes
 ├── hooks/ # Custom hooks for data fetching and state management
-├── pages/ # Main page components
-├── services/ # API service functions (simulated for this project)
-├── styles/ # Global styles and design tokens
+├── services/ # API service functions
+├── styles/ # Global styles and theme
+├── types/ # Business logic types not pertinent to a specific component
 ├── utils/ # Utility functions (e.g., form validation schemas)
-└── index.tsx # Entry point of the application
+├── App.tsx # The only page of the app
+└── main.tsx # Entry point of the application
 ```
 
 ## Design Decisions
@@ -89,6 +103,8 @@ Styled Components provides a flexible, component-based approach to styling, allo
 
 Framer Motion was integrated to create animations that enhance the user experience.
 Future Enhancements
+
+Cypress was chosen for its quick gains regarding end to end testing ensuring all happy paths work.
 
 License
 This project is licensed under the MIT License - see the LICENSE file for details.
